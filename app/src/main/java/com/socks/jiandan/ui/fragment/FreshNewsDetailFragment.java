@@ -151,4 +151,9 @@ public class FreshNewsDetailFragment extends BaseFragment {
 
 		return super.onOptionsItemSelected(item);
 	}
+
+    @Override
+    public void onActionBarClick() {
+
+    }
 }

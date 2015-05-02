@@ -79,8 +79,9 @@ public class MainActivity extends ActionBarActivity implements Initialable {
 		};
 		mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
 
+        //交换了绑定顺序，解决了
+        replaceFragment(R.id.drawer_container, new MainMenuFragment());
 		replaceFragment(R.id.frame_container, new FreshNewsFragment());
-		replaceFragment(R.id.drawer_container, new MainMenuFragment());
 	}
 
 	@Override

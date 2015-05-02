@@ -154,4 +154,8 @@ public class MainMenuFragment extends BaseFragment {
 		}
 	}
 
+    @Override
+    public void onActionBarClick() {
+
+    }
 }

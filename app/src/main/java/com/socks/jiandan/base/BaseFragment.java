@@ -20,56 +20,57 @@ import com.socks.jiandan.utils.ShowToast;
  */
 public abstract class BaseFragment extends Fragment {
 
-	protected ActionBar mActionBar;
+    protected ActionBar mActionBar;
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
-		ActionBarActivity actionBarActivity = (ActionBarActivity) getActivity();
-		mActionBar = actionBarActivity.getSupportActionBar();
+        ActionBarActivity actionBarActivity = (ActionBarActivity) getActivity();
+        mActionBar = actionBarActivity.getSupportActionBar();
 
-		if (activity instanceof MainActivity) {
-			mActionBar.getCustomView()
-					.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							onActionBarClick();
-						}
-					});
-		}
+        if (activity instanceof MainActivity) {
+            //判断是否为MainMenuFragment，是的话就不绑定事件，否则会覆盖之前FreshNewsFragment绑定的事件
+            mActionBar.getCustomView()
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onActionBarClick();
+                        }
+                    });
+        }
 
-	}
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
 
-	}
+    }
 
-	/**
-	 * 重写该方法，可以自由的处理在MainActivity下的ActionBar的点击事件
-	 */
-	public void onActionBarClick() {
-	}
+    /**
+     * 重写该方法，可以自由的处理在MainActivity下的ActionBar的点击事件
+     * 此方法必须为抽象方法
+     */
+    public abstract void onActionBarClick();
 
-	protected void executeRequest(Request request) {
-		RequestManager.addRequest(request, this);
-	}
+    protected void executeRequest(Request request) {
+        RequestManager.addRequest(request, this);
+    }
 
-	protected Response.ErrorListener errorListener() {
-		return new Response.ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				ShowToast.Short(error.getMessage());
-			}
-		};
-	}
+    protected Response.ErrorListener errorListener() {
+        return new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ShowToast.Short(error.getMessage());
+            }
+        };
+    }
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		RequestManager.cancelAll(this);
-	}
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RequestManager.cancelAll(this);
+    }
 }
